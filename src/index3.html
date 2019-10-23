@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+		<link rel="icon" href="favicon.ico" />
+
+		<title>VideoJS HLS</title>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+	</head>
+
+	<body>
+		<h1>Clappr Player</h1>
+		<a href="https://github.com/clappr/clappr/wiki/Embed-Parameters" target="_blank">Github</a>
+
+		<div id="player"></div>
+		<script>
+			var player = new Clappr.Player({
+				autoPlay: true,
+				hideMediaControl: false,
+				mediacontrol: { seekbar: "#E113D3", buttons: "#66B2FF" },
+				height: 60,
+				source: "../dist/music/shin/shin.m3u8",
+				parentId: "#player",
+			});
+		</script>
+	</body>
+</html>

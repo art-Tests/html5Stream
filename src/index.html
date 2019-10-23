@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+        <h2>Html5 Video tag , only Edge support</h2>
+		<video width="352" height="198" controls id="myVideo">
+			<source src="../dist/music/shin/shin.m3u8" type="application/x-mpegURL" />
+		</video>
+		<script>
+			var videoElement = document.getElementById("myVideo");
+			if (
+				videoElement.canPlayType("application/vnd.apple.mpegurl") === "probably" ||
+				videoElement.canPlayType("application/vnd.apple.mpegurl") === "maybe"
+			) {
+				//Actions like playing the .m3u8 content
+                console.log('good')
+			} else {
+				//Actions like playing another video type
+                console.log('bad')
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script> -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+	</head>
+	<body>
+		<h2>HLS.js</h2>
+		<ul>
+			<li><a href="https://github.com/video-dev/hls.js/" target="_blank">Github</a></li>
+			<li><a href="https://github.com/video-dev/hls.js/blob/master/docs/API.md" target="_blank">API Doc</a></li>
+		</ul>
+
+		<hr />
+		<div id="app">
+			<video ref="video" controls="" autoplay="" class="" style="height:50px;width: 600px;"></video>
+			<hr />
+			<ul>
+				<li v-for="(song,index) in currentSongList">
+					<a href="#" v-on:click.prevent="changeSong(song)">{{ song.name }}</a
+					>：{{ song.path }}
+				</li>
+			</ul>
+			<hr />
+			<button type="button" class="btn btn-sm btn-info" v-on:click="play">play</button>
+			<button type="button" class="btn btn-sm btn-info" v-on:click="pause">pause</button>
+			<button type="button" class="btn btn-sm btn-info" v-on:click="changeTime(-10)">- 10 s</button>
+			<button type="button" class="btn btn-sm btn-info" v-on:click="changeTime(10)">+ 10 s</button>
+			<button type="button" class="btn btn-sm btn-info" v-on:click="seek">Seek to</button>
+			<input type="text" size="8" v-model="seek_pos" v-on:keydown.enter="seek" />
+		</div>
+
+        <script src="./enums/songs.js"></script>
+        
+		<script>
+			(() => {
+				var app = new Vue({
+					el: "#app",
+					props: {
+						currentSongList: {
+							type: Array,
+							default: () => [...songList],
+						},
+					},
+					data: {
+						hls: null,
+						seek_pos: null,
+					},
+					computed: {
+						player() {
+							return this.$refs.video;
+						},
+					},
+					methods: {
+						play() {
+							this.player.play();
+						},
+						pause() {
+							this.player.pause();
+						},
+						changeTime(time) {
+							this.player.currentTime += time;
+						},
+						seek() {
+							this.player.currentTime = this.seek_pos;
+						},
+						changeSong(song) {
+							if (song === undefined) return;
+
+							if (Hls.isSupported()) {
+								if (this.hls) {
+									this.hls.destroy();
+								}
+
+								this.hls = new Hls();
+								this.hls.attachMedia(this.player);
+								this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+									this.hls.loadSource(song.path);
+								});
+							}
+						},
+					},
+					mounted() {
+						let song = this.currentSongList[0];
+                        this.changeSong(song);
+                        this.pause()
+					},
+				});
+			})();
+		</script>
+	</body>
+</html>

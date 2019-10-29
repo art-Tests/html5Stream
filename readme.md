@@ -24,4 +24,5 @@ ffmpeg -i ./src/songs/shin.mp3 -c:a libmp3lame -b:a 128k -map 0:0 -f segment -se
 1. [HTML5 video tag (only for Edge)](src/index.html)
 1. [flowPlayer.js](src/index2.html)
 1. [Clappr Player](src/index3.html)
-1. [HLS.js](src/index4.html)
+1. [HLS.js](src/index4.html) - [vue.js version](src/app.html)
+1. [audio tag](src/index5.html)

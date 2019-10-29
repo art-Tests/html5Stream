@@ -30,12 +30,10 @@
 			size="8"
 			onkeydown="if(window.event.keyCode=='13'){document.querySelector('#video').currentTime=document.querySelector('#seek_pos').value}"
 		/>
+		<script src="./enums/songs.js"></script>
 		<script>
 			var hls = new Hls();
-			const songList = [
-				{ name: "掌紋算命", path: "../dist/music/shin/shin.m3u8" },
-				{ name: "這款自作多情", path: "../dist/music/song/song.m3u8" },
-			];
+	
 			function changeSong(index) {
 				if (Hls.isSupported()) {
 					if (hls) {

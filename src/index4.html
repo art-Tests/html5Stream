@@ -4,7 +4,6 @@
 
 	<body>
 		<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<h2>HLS.js</h2>
 		<ul>
 			<li><a href="https://github.com/video-dev/hls.js/" target="_blank">Github</a></li>
@@ -13,37 +12,37 @@
 
 		<hr />
 		<video id="video" controls="" autoplay="" class="" style="height:50px;width: 600px;"></video>
-        <hr/>
-        <button type="button" class="btn btn-sm btn-info" onclick="changeSong(0)">掌紋算命</button>
-        <button type="button" class="btn btn-sm btn-info" onclick="changeSong(1)">這款自作多情</button>
+		<hr />
+		<button type="button" class="btn btn-sm btn-info" onclick="changeSong(0)">掌紋算命</button>
+		<button type="button" class="btn btn-sm btn-info" onclick="changeSong(1)">這款自作多情</button>
 
 		<hr />
-		<button type="button" class="btn btn-sm btn-info" onclick="$('#video')[0].play()">Play</button>
-		<button type="button" class="btn btn-sm btn-info" onclick="$('#video')[0].pause()">Pause</button>
-		<button type="button" class="btn btn-sm btn-info" onclick="$('#video')[0].currentTime-=10">- 10 s</button>
-		<button type="button" class="btn btn-sm btn-info" onclick="$('#video')[0].currentTime+=10">+ 10 s</button>
-		<button type="button" class="btn btn-sm btn-info" onclick="$('#video')[0].currentTime=$('#seek_pos').val()">
+		<button type="button" class="btn btn-sm btn-info" onclick="document.querySelector('#video').play()">Play</button>
+		<button type="button" class="btn btn-sm btn-info" onclick="document.querySelector('#video').pause()">Pause</button>
+		<button type="button" class="btn btn-sm btn-info" onclick="document.querySelector('#video').currentTime-=10">- 10 s</button>
+		<button type="button" class="btn btn-sm btn-info" onclick="document.querySelector('#video').currentTime+=10">+ 10 s</button>
+		<button type="button" class="btn btn-sm btn-info" onclick="document.querySelector('#video').currentTime=document.querySelector('#seek_pos').value">
 			Seek to
 		</button>
 		<input
 			type="text"
 			id="seek_pos"
 			size="8"
-			onkeydown="if(window.event.keyCode=='13'){$('#video')[0].currentTime=$('#seek_pos').val();}"
+			onkeydown="if(window.event.keyCode=='13'){document.querySelector('#video').currentTime=document.querySelector('#seek_pos').value}"
 		/>
 		<script>
-            var hls = new Hls();
+			var hls = new Hls();
 			const songList = [
 				{ name: "掌紋算命", path: "../dist/music/shin/shin.m3u8" },
 				{ name: "這款自作多情", path: "../dist/music/song/song.m3u8" },
-            ];
-            function changeSong(index) {
+			];
+			function changeSong(index) {
 				if (Hls.isSupported()) {
-                    if (hls){
-                        hls.destroy();
-                    }
-                    
-                    hls = new Hls();
+					if (hls) {
+						hls.destroy();
+					}
+
+					hls = new Hls();
 					let song = songList[index];
 					hls.attachMedia(video);
 					hls.on(Hls.Events.MEDIA_ATTACHED, function() {
@@ -51,9 +50,14 @@
 					});
 				}
 			}
-			$(document).ready(function() {
-				changeSong(0)
-			});
+
+			function pause(){
+				document.querySelector('#video').pause()
+			}
+
+			(() => {
+				changeSong(0);
+			})();
 		</script>
 	</body>
 </html>
